@@ -1,0 +1,23 @@
+<mat-toolbar>
+  <!-- Logo / Brand -->
+  <span>Combine</span>
+
+  <!-- Spacer -->
+  <span class="spacer"></span>
+
+  <!-- Desktop Links -->
+  <nav class="desktop-menu">
+    <button mat-button routerLink="/match" routerLinkActive="active-link">Match</button>
+    <button mat-button [matMenuTriggerFor]="itemsMenu">Items</button>
+    <button mat-button routerLink="/about" >Categories</button>
+  </nav>
+</mat-toolbar>
+
+<!-- Profile Dropdown -->
+<mat-menu #itemsMenu="matMenu">
+  <button mat-menu-item routerLink="/items">List</button>
+  <button mat-menu-item routerLink="/new-item">Add an Item</button>
+  <button mat-menu-item routerLink="/tags">Tags</button>
+</mat-menu>
+
+

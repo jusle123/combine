@@ -1,0 +1,79 @@
+<form [formGroup]="form" class="item-form" (ngSubmit)="onSubmit()">
+  <div class="card">
+    <div class="preview">
+      <div class="preview-inner" *ngIf="imagePreview; else placeholder">
+        <img [src]="imagePreview" alt="Selected image preview" />
+      </div>
+      <ng-template #placeholder>
+        <div class="placeholder">No image selected</div>
+      </ng-template>
+    </div>
+
+    <div class="controls">
+      <label class="field">
+        <span class="label-text">Title</span>
+        <input formControlName="title" type="text" placeholder="Item title" />
+        <small class="error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">
+          Title is required (max 100 chars).
+        </small>
+      </label>
+
+      <label class="field file-field">
+        <span class="label-text">Image</span>
+        @if (existingFile()) {
+          <div class="flex items-center gap-2">
+          <a [href]="imagePreview" target="_blank" >{{existingFile()!.name}}</a>
+          <button mat-icon-button (click)="deleteImage($event)" >
+            <mat-icon>delete</mat-icon>
+          </button>
+          </div>
+        } @else {
+        <input type="file" accept="image/png, image/jpeg" (change)="onFileChange($event)" #fileInput/>
+        <small class="error" *ngIf="fileError">{{ fileError }}</small>
+        <small class="error" *ngIf="form.get('image')?.touched && form.get('image')?.hasError('required')">
+          Image is required.
+        </small>
+        }
+      </label>
+
+      <label class="field">
+        <span class="label-text">Category</span>
+        <select formControlName="category">
+          <option [ngValue]="null">Select a category</option>
+          <option [value]="1">JEWELLERY</option>
+          <option [value]="2">ALL</option>
+          <option [value]="3">TOP</option>
+          <option [value]="4">BOTTOM</option>
+          <option [value]="5">SHOES</option>
+        </select>
+        <small class="error" *ngIf="form.get('category')?.touched && form.get('category')?.invalid">
+          Category is required.
+        </small>
+      </label>
+
+      <div>
+      @if (tags().length) {
+        <div class="flex flex-wrap gap-2">
+          @for (tag of tags(); track tag.id; let i = $index) {
+            <div class="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-sm">
+              <button
+                type="button"
+                (click)="toggleTag(tag.id!)"
+                class="truncate max-w-xs focus:outline-none"
+                [className]="isTagSelected(tag.id!) ? 'text-blue-600' : 'text-gray-500'"
+              >
+                {{ tag.text }}
+              </button>
+            </div>
+          }
+        </div>
+      }
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn primary" [disabled]="form.invalid">{{itemId() ? "Save" : "Upload"}}</button>
+        <button type="button" class="btn" (click)="clearForm()">Clear</button>
+      </div>
+    </div>
+  </div>
+</form>

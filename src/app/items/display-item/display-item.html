@@ -1,0 +1,12 @@
+<div class="group">
+  <img
+       [src]="item().imageSrc"
+       [alt]="item().title"
+       class="w-36 h-36 object-contain float-left">
+  <button mat-icon-button class="justify-self-end mb-2
+           bg-gray-800 text-white text-sm rounded py-1.5 px-3
+           opacity-0 group-hover:opacity-100 invisible group-hover:visible
+           transition-all duration-300 whitespace-nowrap shadow-lg" (click)="onDelete()" >
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,50 @@
+<div class="container">
+  <mat-expansion-panel #expansionPanel>
+    <mat-expansion-panel-header>
+      <mat-panel-title><mat-icon class="mr-3">stars_2</mat-icon> Add an item </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-item-form [(itemId)]="selectedItemId"></app-item-form>
+  </mat-expansion-panel>
+
+  <div class="controls mt-10">
+    <input class="search" [formControl]="searchControl" placeholder="Search by title..." />
+
+    <div class="page-controls">
+      <label>Page size:</label>
+      <select [value]="pageSize" (change)="setPageSize($any($event.target).value)">
+        @for (s of pageSizeOptions; track s) {
+          <option [value]="s">{{ s }}</option>
+        }
+      </select>
+
+      <button (click)="prev()" [disabled]="page === 1">Prev</button>
+      <span>Page {{ page }} of {{ Math.max(1, Math.ceil(total / pageSize)) }}</span>
+      <button (click)="next()" [disabled]="page * pageSize >= total">Next</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    @for (it of items; track it.data.id) {
+    <div class="card">
+      @if (it.imageUrl) {
+      <img [src]="it.imageUrl" alt="item image" />
+      }
+      <div><strong>{{ it.data.title }}</strong></div>
+      <div class="muted">{{ it.data.createdAt | date:'short' }}</div>
+      <div class="flex justify-end">
+        <button mat-icon-button class="justify-self-end" (click)="selectedItemId.set(it.data.id!); expansionPanel.open()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button class="justify-self-end" (click)="deleteItem(it.data.id!)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
+    </div>
+    }
+  </div>
+
+  <div style="margin-top:1rem">
+    Showing {{ items.length }} of {{ total }} items.
+  </div>
+</div>

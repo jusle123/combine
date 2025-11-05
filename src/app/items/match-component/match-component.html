@@ -1,0 +1,85 @@
+<!-- html -->
+<div class="flex gap-6 items-start">
+  <!-- Left: previews -->
+  <div class="flex-1 flex flex-col gap-4 border-2 rounded-md border-indigo-200 shadow-sm bg-white">
+    <div class="flex gap-2 justify-center mt-2">
+      @for (it of selectedJewelleryItems; track it.id) {
+        <app-display-item [item]="it" (deleteEvent)="deleteItemFromMultiple(selectedJewellery, it.id!)"></app-display-item>
+      }
+    </div>
+    <div class="flex gap-2 justify-center">
+      @if (selectedDressItem) {
+        <app-display-item [item]="selectedDressItem" (deleteEvent)="selectedDress = null;"></app-display-item>
+      }
+    </div>
+    <div class="flex gap-2 justify-center">
+      @if (selectedTopItem) {
+        <app-display-item [item]="selectedTopItem" (deleteEvent)="selectedTop = null;"></app-display-item>
+      }
+    </div>
+    <div class="flex justify-center gap-2">
+      @if (selectedBottomItem) {
+        <app-display-item [item]="selectedBottomItem" (deleteEvent)="selectedBottom = null;"></app-display-item>
+      }
+    </div>
+    <div class="flex justify-center gap-2">
+      @if (selectedShoesItem) {
+        <app-display-item [item]="selectedShoesItem" (deleteEvent)="selectedShoes = null;"></app-display-item>
+      }
+    </div>
+  </div>
+
+  <!-- Right: controls -->
+  <div class="w-80 flex flex-col gap-3">
+    <div class="flex flex-col">
+      <label class="block mb-1 text-sm font-medium text-gray-700">Tags</label>
+      <div class="flex flex-wrap gap-2">
+        <div *ngFor="let tag of tags"
+              (click)="toggleTagSelection(tag.id!)"
+              [class.selected]="selectedTags().includes(tag.id!)"
+              class="flex items-center gap-2 bg-gray-200 px-3 py-1 rounded-full text-sm cursor-pointer"
+        >
+          <span class="text-gray-800 truncate max-w-xs">{{ tag.text }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <label class="block mb-1 text-sm font-medium text-gray-700">Jewellery</label>
+      <select multiple [(ngModel)]="selectedJewellery" size="4">
+        <option *ngFor="let it of jewelleryItems" [ngValue]="it.id">{{ it.title }}</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col">
+      <label class="block mb-1 text-sm font-medium text-gray-700">Dress</label>
+      <select [(ngModel)]="selectedDress">
+        <option [ngValue]="null">-- none --</option>
+        <option *ngFor="let it of dressItems" [ngValue]="it.id">{{ it.title }}</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col">
+      <label class="block mb-1 text-sm font-medium text-gray-700">Top</label>
+      <select [(ngModel)]="selectedTop" class="w-full p-2 border rounded text-sm">
+        <option [ngValue]="null">-- none --</option>
+        <option *ngFor="let it of topItems" [ngValue]="it.id">{{ it.title }}</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col">
+      <label class="block mb-1 text-sm font-medium text-gray-700">Bottom</label>
+      <select [(ngModel)]="selectedBottom" class="w-full p-2 border rounded text-sm">
+        <option [ngValue]="null">-- none --</option>
+        <option *ngFor="let it of bottomItems" [ngValue]="it.id">{{ it.title }}</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col">
+      <label class="block mb-1 text-sm font-medium text-gray-700">Shoes</label>
+      <select [(ngModel)]="selectedShoes" class="w-full p-2 border rounded text-sm">
+        <option [ngValue]="null">-- none --</option>
+        <option *ngFor="let it of shoesItems" [ngValue]="it.id">{{ it.title }}</option>
+      </select>
+    </div>
+  </div>
+</div>
