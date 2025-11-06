@@ -1,6 +1,9 @@
 <mat-toolbar>
   <!-- Logo / Brand -->
-  <span>Combine</span>
+  <div class="mr-5 flex gap-2  ">
+    <div>Combine</div>
+     <div class="material-symbols-outlined" style="font-size: 28px">wand_stars</div>
+  </div>
 
   <!-- Spacer -->
   <span class="spacer"></span>
@@ -9,7 +12,7 @@
   <nav class="desktop-menu">
     <button mat-button routerLink="/match" routerLinkActive="active-link">Match</button>
     <button mat-button [matMenuTriggerFor]="itemsMenu">Items</button>
-    <button mat-button routerLink="/about" >Categories</button>
+<!--    <button mat-button routerLink="/about" >Categories</button>-->
   </nav>
 </mat-toolbar>
 
